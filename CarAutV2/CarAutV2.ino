@@ -23,8 +23,8 @@ void setup() {
   pinMode(HC_SR04_TRIGGER, OUTPUT ); // Define o trigger do sensor para enviar o sinal
   pinMode(HC_SR04_ECHO, INPUT);   // Define o Echo do sensor para receber o sinal
   pinMode(BUZZER, OUTPUT);     // Define o pino do buzzer como saída
-  motor1.setSpeed(130);       // Define a velocidade para os motores 1.A velocidade máxima é 255
-  motor2.setSpeed(130);       // Define a velocidade para os motores 2. A velocidade máxima é 255
+  motor1.setSpeed(170);       // Define a velocidade para os motores 1.A velocidade máxima é 255
+  motor2.setSpeed(170);       // Define a velocidade para os motores 2. A velocidade máxima é 255
   servo_ultra_sonico.write(90);   // O servo do sensor se inicia a 90 graus (meio)
   rotacao_Parado;
 }
