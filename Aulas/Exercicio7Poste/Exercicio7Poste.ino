@@ -12,9 +12,9 @@ void loop() {
   valorLDR = analogRead(ldr);
   Serial.println(valorLDR);
   if(valorLDR > 300)
-    digitalWrite(led,HIGH);
+    digitalWrite(led,LOW);
   else
-    digitalWrite(led,LOW);  
+    digitalWrite(led,HIGH);  
   delay(500);
 }
  
