@@ -5,15 +5,53 @@ const int D = 5;
 const int E = 6;
 const int F = 7;
 const int G = 8;
+const int ponto = 9;
+int numImpresso;
+
+byte botaoMais = 11;
+byte botaoMenos = 12;
 
 void setup() {
   // put your setup code here, to run once:
   for(int i = 2;i <9;i++){
     pinMode(i,OUTPUT);
   }
+  pinMode(botaoMais, INPUT);
+  pinMode(botaoMenos, INPUT);
+
+  numImpresso = 0;
 }
 
+
 void loop() {
+  if(digitalRead(botaoMais))
+    numImpresso ++;
+  if(digitalRead(botaoMenos))
+    numImpresso --;
+
+  if(numImpresso == -1)
+    numImpresso = 9;
+  else if(numImpresso == 10)
+    numImpresso = 0;
+     
+  switch(numImpresso){
+    case 0 : imprimeZERO(); break;
+    case 1 : imprimeUM(); break;
+    case 2 : imprimeDOIS(); break;
+    case 3 : imprimeTRES(); break;
+    case 4 : imprimeQUATRO(); break;
+    case 5 : imprimeCINCO(); break;
+    case 6 : imprimeSEIS(); break;
+    case 7 : imprimeSETE(); break;
+    case 8 : imprimeOITO(); break;
+    case 9 : imprimeNOVE(); break;
+  }
+
+  delay(250);
+  
+}
+
+void imprimeZERO(){
   //Número 0
   digitalWrite(A,HIGH);
   digitalWrite(B,HIGH);
@@ -23,8 +61,10 @@ void loop() {
   digitalWrite(F,HIGH);
   digitalWrite(G,LOW);
 
-  delay(1000);
+}
 
+
+void imprimeUM(){
   //Número 1
   digitalWrite(A,LOW);
   digitalWrite(B,HIGH);
@@ -34,8 +74,9 @@ void loop() {
   digitalWrite(F,LOW);
   digitalWrite(G,LOW);
 
-  delay(1000);
+}
 
+void imprimeDOIS(){
   //Número 2
   digitalWrite(A,HIGH);
   digitalWrite(B,HIGH);
@@ -45,8 +86,9 @@ void loop() {
   digitalWrite(F,LOW);
   digitalWrite(G,HIGH);
 
-  delay(1000);
+}
 
+void imprimeTRES(){
   //Número 3
   digitalWrite(A,HIGH);
   digitalWrite(B,HIGH);
@@ -56,8 +98,9 @@ void loop() {
   digitalWrite(F,LOW);
   digitalWrite(G,HIGH);
 
-  delay(1000);
-  
+}
+
+void imprimeQUATRO(){
   //Número 4
   digitalWrite(A,LOW);
   digitalWrite(B,HIGH);
@@ -67,9 +110,9 @@ void loop() {
   digitalWrite(F,HIGH);
   digitalWrite(G,HIGH);
 
-  delay(1000);
+}
 
-  
+void imprimeCINCO(){
   //Número 5
   digitalWrite(A,HIGH);
   digitalWrite(B,LOW);
@@ -79,9 +122,9 @@ void loop() {
   digitalWrite(F,HIGH);
   digitalWrite(G,HIGH);
 
-  delay(1000);
+}
 
-  
+void imprimeSEIS(){
   //Número 6
   digitalWrite(A,LOW);
   digitalWrite(B,LOW);
@@ -91,9 +134,9 @@ void loop() {
   digitalWrite(F,HIGH);
   digitalWrite(G,HIGH);
 
-  delay(1000);
+}
 
-  
+void imprimeSETE(){
   //Número 7
   digitalWrite(A,HIGH);
   digitalWrite(B,HIGH);
@@ -103,9 +146,8 @@ void loop() {
   digitalWrite(F,LOW);
   digitalWrite(G,LOW);
 
-  delay(1000);
-
-  
+}
+void imprimeOITO(){
   //Número 8
   digitalWrite(A,HIGH);
   digitalWrite(B,HIGH);
@@ -115,9 +157,9 @@ void loop() {
   digitalWrite(F,HIGH);
   digitalWrite(G,HIGH);
 
-  delay(1000);
+}
 
-  
+void imprimeNOVE(){
   //Número 9
   digitalWrite(A,HIGH);
   digitalWrite(B,HIGH);
@@ -127,5 +169,4 @@ void loop() {
   digitalWrite(F,HIGH);
   digitalWrite(G,HIGH);
 
-  delay(1000);
 }
