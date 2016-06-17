@@ -1,35 +1,33 @@
 // inclusão de bibliotecas.
-#include <Servo.h>    // inclui biblioteca de manipulação de servos motores.    
-#include <Ultrasonic.h> // inclui biblioteca de manipulação do sensor ultrassônico.    
-#include <AFMotor.h>   // inclui biblioteca de manipulação de motores DCs.  
+#include <Servo.h>        
+#include <Ultrasonic.h>  
+#include <AFMotor.h>   //biblioteca de manipulação de motores DCs.  
 
 //definindo os pinos
 #define HC_SR04_TRIGGER A1 // Define o pino do Trigger do sensor ultrassônico no pino ANALÓGICO A2  
 #define HC_SR04_ECHO A2   // Define o pino do Echo do sensor ultrassônico no pino ANALÓGICO A3  
-#define BUZZER A0      // Define o pino do buzzer (Som) no pino ANALÓGICO A0  
+#define BUZZER A0      
 AF_DCMotor motor1(4);    // Define o motor1 ligado ao M3
 AF_DCMotor motor2(3);    // Define o motor2 ligado ao M4
 
 Ultrasonic ultrasonic(HC_SR04_TRIGGER,HC_SR04_ECHO);
-Servo servo_ultra_sonico; // nomeando o servo motor
+Servo servo_ultra_sonico; 
 int distancia_cm = 0;   //variável do valor da distância
 
-// executado na inicialização do Arduino
 void setup() {
-  Serial.begin(9600); // inicializa a comunicação serial para mostrar dados
+  Serial.begin(9600);
 
   //configurações do servos motores
   servo_ultra_sonico.attach(10);   // Define o mini servo motor ligado no pino 10.
-  pinMode(HC_SR04_TRIGGER, OUTPUT ); // Define o trigger do sensor para enviar o sinal
-  pinMode(HC_SR04_ECHO, INPUT);   // Define o Echo do sensor para receber o sinal
-  pinMode(BUZZER, OUTPUT);     // Define o pino do buzzer como saída
+  pinMode(HC_SR04_TRIGGER, OUTPUT );
+  pinMode(HC_SR04_ECHO, INPUT);   
+  pinMode(BUZZER, OUTPUT);     
   motor1.setSpeed(170);       // Define a velocidade para os motores 1.A velocidade máxima é 255
   motor2.setSpeed(170);       // Define a velocidade para os motores 2. A velocidade máxima é 255
   servo_ultra_sonico.write(90);   // O servo do sensor se inicia a 90 graus (meio)
   rotacao_Parado;
 }
 
-// Função principal do Arduino
 void loop() {
   andar();
 }
@@ -37,8 +35,8 @@ void loop() {
 // Função para chamar outras funções e definir o que o robô fará
 void andar() {
   reposicionaServoSonar();
-  int distancia = lerSonar(); // Ler o sensor de distância
-  Serial.print("distancia: "); // Exibe no serial
+  int distancia = lerSonar(); 
+  Serial.print("distancia: "); 
   Serial.println(distancia);
   if (distancia > 25) {
     rotacao_Frente();
@@ -51,28 +49,16 @@ void andar() {
 
 // Função para ler e calcular a distância do sensor ultrassônico
 int lerSonar() {
-  /*digitalWrite(HC_SR04_TRIGGER, LOW);     // Desliga a emisão do som
-  delayMicroseconds(4);            // Aguarda 4 segundos
-  digitalWrite(HC_SR04_TRIGGER, HIGH);     // Liga a trasmisão de som
-  delayMicroseconds(20);            // Continua emitindo o som durante 20 segundos
-  digitalWrite(HC_SR04_TRIGGER, LOW);     // Desliga a emisão do som
-  delayMicroseconds(10);            // Aguarda 10 segundos para poder receber o som
-  long pulse_us = pulseIn(HC_SR04_ECHO, HIGH); // Liga o recebedor e calcula quandos pulsos ele recebeu
-  distancia_cm = pulse_us / 59;        // Calcula a distaâcia em CM
-  delay(300);
-  return distancia_cm;             // Retorna a distância*/
-  return ultrasonic.Ranging(CM);
+   return ultrasonic.Ranging(CM);
 }
 
 // Função para calcular a distância do centro
 int calcularDistanciaCentro() {
   servo_ultra_sonico.write(75);
   delay(300);
-  int leituraDoSonar = lerSonar();  // Ler sensor de distância
-  /*delay(600);
-  leituraDoSonar = lerSonar();
-  delay(600); */
-  Serial.print("Distancia Centro: "); // Exibe no serial
+  int leituraDoSonar = lerSonar(); 
+
+  Serial.print("Distancia Centro: ");
   Serial.println(leituraDoSonar);
   return leituraDoSonar;       // Retorna a distância
 }
@@ -82,9 +68,6 @@ int calcularDistanciaDireita() {
   servo_ultra_sonico.write(0);
   delay(300);
   int leituraDoSonar = lerSonar();
-  /*delay(600);
-  leituraDoSonar = lerSonar();
-  delay(600); */
   Serial.print("Distancia Direita: ");
   Serial.println(leituraDoSonar);
   return leituraDoSonar;
@@ -95,9 +78,6 @@ int calcularDistanciaEsquerda() {
   servo_ultra_sonico.write(180);
   delay(300);
   int leituraDoSonar = lerSonar();
-  /*delay(600);
-  leituraDoSonar = lerSonar();
-  delay(600); */
   Serial.print("Distancia Esquerda: ");
   Serial.println(leituraDoSonar);
   return leituraDoSonar;
@@ -147,7 +127,7 @@ void posicionaCarroMelhorCaminho() {
   reposicionaServoSonar();
 }
 
-// Função para deixar o sensor "olho" do robô no centro
+// Função para deixar o sensor ultrasonic do robô no centro
 void reposicionaServoSonar() {
   servo_ultra_sonico.write(75);
   delay(200);
@@ -175,18 +155,18 @@ void rotacao_Re()
 {
   Serial.println(" ré ");
   tone(A0, 300, 300);    // Configuração do tom do som
-  digitalWrite(BUZZER, HIGH); // Liga o som
-  delay(500);         // Aguarda durante 250 milesecundos
-  digitalWrite(BUZZER, LOW); // Desliga o som
-  delay(50);         // Aguarda durante 250 milesecundos
+  digitalWrite(BUZZER, HIGH); 
+  delay(500);         
+  digitalWrite(BUZZER, LOW);
+  delay(50);        
   motor1.run(FORWARD);    // Roda vai para trás
   motor2.run(FORWARD);    // Roda vai para trás
   delay(500);
   tone(A0, 300, 300);
-  digitalWrite(BUZZER, HIGH); // Liga o som
-  delay(500);         // Aguarda durante 250 milesecundos
-  digitalWrite(BUZZER, LOW); // Desliga o som
-  delay(50);         // Aguarda durante 250 milesecundos
+  digitalWrite(BUZZER, HIGH); 
+  delay(500);        
+  digitalWrite(BUZZER, LOW); 
+  delay(50);      
 
   rotacao_Parado();
 }
